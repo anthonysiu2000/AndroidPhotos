@@ -3,7 +3,7 @@ package model;
 public class Album {
 
 	//private fields
-	private String aName;
+	protected String aName;
 	
 	//constructor
 	public Album(String name) {

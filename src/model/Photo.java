@@ -8,9 +8,9 @@ import java.util.Date;
 public class Photo {
 	//fields
 	private String filePath;
-	private String caption;
-	private Calendar calDate;
-	private ArrayList<Tag> tags;
+	protected String caption;
+	protected Calendar calDate;
+	protected ArrayList<Tag> tags;
 	
 	//constructor
 	public Photo(File imageFile) {
