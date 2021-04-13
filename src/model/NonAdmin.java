@@ -2,17 +2,21 @@ package model;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 
 public class NonAdmin extends User {
 	//fields
 	private ArrayList<Album> albumList;
 	private ArrayList<Photo> photoList;
 	private ArrayList<Connection> conList;
+	private int albumNumCreate;
 	//constructor
 	public NonAdmin(){
 		albumList = new ArrayList<Album>();
 		photoList = new ArrayList<Photo>();
 		conList = new ArrayList<Connection>();
+		albumNumCreate = 0;
 	}
 	//gets list of albums for this user
 	public ArrayList<Album> getAlbums() {
@@ -172,4 +176,151 @@ public class NonAdmin extends User {
 		}
 		return false;
 	}
+	//copies a photo from an album to another; returns true if successful
+	public boolean copyPhoto(String oAlbName, String nAlbName, String photoPath) {
+		//checks if the photo exists
+		for (int k = 0; k < photoList.size(); k++) {
+			if (photoList.get(k).getPath().equals(photoPath)) {
+				//checks if there is already an instance of the photo in the target album
+				for (int i = 0; i < conList.size(); i++) {
+					if (conList.get(i).getAlbum() == nAlbName && conList.get(i).getPath() == photoPath) {
+						return false;
+					}
+				}
+				conList.add(new Connection(nAlbName, photoPath));
+				return true;
+			}
+		}
+		return false;
+	}
+	//moves a photo from an album to another; returns true if successful
+	public boolean movePhoto(String oAlbName, String nAlbName, String photoPath) {
+		//copies photo to new album
+		if (copyPhoto(oAlbName, nAlbName, photoPath)) {
+			//removes old photo to album connection
+			for (int i = 0; i < conList.size(); i++) {
+				if (conList.get(i).getAlbum() == oAlbName && conList.get(i).getPath() == photoPath) {
+					conList.remove(i);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	//returns a filtered array list of photos that in a specified date range
+	public ArrayList<Photo> searchPhotoByDate(Calendar start, Calendar end) {
+		//creates new array list
+		ArrayList<Photo> sortedPhotos = new ArrayList<Photo>();
+		for (int j = 0; j < photoList.size(); j++) {
+			sortedPhotos.add(photoList.get(j));
+		}
+		//sorts array list in terms of calendar times
+		Collections.sort(sortedPhotos);
+		//removes photos that are not within the calendar range
+		for (int i = sortedPhotos.size() - 1; i >= 0; i--) {
+			if (sortedPhotos.get(i).getDate().compareTo(end) > 0 || sortedPhotos.get(i).getDate().compareTo(start) < 0) {
+				sortedPhotos.remove(i);
+			}
+		}
+		return sortedPhotos;
+	}
+	//returns an array of photos that have the tags specified; if 2, uses andOp boolean to specify "and" or "or"
+	public ArrayList<Photo> serachPhotoByTag(Tag tag1, Tag tag2, boolean andOp) {
+		//creates new array list
+		ArrayList<Photo> sortedPhotos = new ArrayList<Photo>();
+		for (int j = 0; j < photoList.size(); j++) {
+			sortedPhotos.add(photoList.get(j));
+		}
+		//removes photos that do not have the specified tags
+		for (int i = sortedPhotos.size() - 1; i >= 0; i--) {
+			ArrayList<Tag> temp = sortedPhotos.get(i).getTags();
+			//if there is only one tag
+			if (tag2 == null) {
+				for (int j = 0; j< temp.size(); j++) {
+					boolean remove = true;
+					if (temp.get(j).getName().equals(tag1.getName()) && temp.get(j).getValue().equals(tag1.getValue())) {
+						remove = false;
+					}
+					if (remove) {
+						sortedPhotos.remove(i);
+					}
+				}
+			}
+			//two tags
+			else {
+				for (int j = 0; j< temp.size(); j++) {
+					boolean tag1Found = false;
+					boolean tag2Found = false;
+					//sets fields to true if tags are found
+					if (temp.get(j).getName().equals(tag1.getName()) && temp.get(j).getValue().equals(tag1.getValue())) {
+						tag1Found = true;
+					}
+					if (temp.get(j).getName().equals(tag2.getName()) && temp.get(j).getValue().equals(tag2.getValue())) {
+						tag2Found = true;
+					}
+					//remove those with no tags
+					if (tag1Found == false && tag2Found == false) {
+						sortedPhotos.remove(i);
+					}
+					//In AND case, remove those with only one tag
+					else if (andOp && (tag1Found ^ tag2Found)) {
+						sortedPhotos.remove(i);
+					}
+				}
+			}
+		}
+		return sortedPhotos;
+	}
+	//creates a new album and adds connections between the album and the copied photos
+	public void createAlbumFromSearch(ArrayList<Photo> list) {
+		albumNumCreate += 1;
+		String newAlbumName = "CreatedAlbum" + String.valueOf(albumNumCreate);
+		createAlbum(newAlbumName);
+		for (int i = 0; i < list.size(); i++) {
+			//inserts a new connection
+			Connection con = new Connection(newAlbumName, list.get(i).getPath());
+			conList.add(con);
+		}
+	}
+	//returns number of photos in an album
+	public int getAlbumNum(String aName) {
+		int numPhotos = 0;
+		for (int i = 0; i < conList.size(); i++) {
+			if (conList.get(i).getAlbum().equals(aName)) {
+				numPhotos++;
+			}
+		}
+		return numPhotos;
+	}
+	//returns earliest Calendar entry of the Album
+	public Calendar getAlbumEarliest(String aName) {
+		Calendar earliest = photoList.get(0).getDate();
+		for (int i = 0; i < conList.size(); i++) {
+			if (conList.get(i).getAlbum().equals(aName)) {
+				String temp = conList.get(i).getPath();
+				for (int j = 0; j < photoList.size(); j++) {
+					if (photoList.get(j).getPath().equals(temp) && photoList.get(j).getDate().compareTo(earliest) < 0) {
+						earliest = photoList.get(j).getDate();
+					}
+				}
+			}
+		}
+		return earliest;
+	}
+	//returns latest Calendar entry of the Album
+	public Calendar getAlbumLatest(String aName) {
+		Calendar latest = photoList.get(0).getDate();
+		for (int i = 0; i < conList.size(); i++) {
+			if (conList.get(i).getAlbum().equals(aName)) {
+				String temp = conList.get(i).getPath();
+				for (int j = 0; j < photoList.size(); j++) {
+					if (photoList.get(j).getPath().equals(temp) && photoList.get(j).getDate().compareTo(latest) > 0) {
+						latest = photoList.get(j).getDate();
+					}
+				}
+			}
+		}
+		return latest;
+	}
+	
 }

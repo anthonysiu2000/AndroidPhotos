@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Photo {
+public class Photo implements Comparable<Photo> {
 	//fields
 	private String filePath;
 	protected String caption;
@@ -42,6 +42,10 @@ public class Photo {
 	//adds a tag
 	public void addTag(Tag inputTag) {
 		tags.add(inputTag);
+	}
+	@Override
+	public int compareTo(Photo photo) {
+		return calDate.compareTo(photo.calDate);
 	}
 	
 }
