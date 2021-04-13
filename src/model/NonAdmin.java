@@ -12,11 +12,17 @@ public class NonAdmin extends User {
 	private ArrayList<Connection> conList;
 	private int albumNumCreate;
 	//constructor
-	public NonAdmin(){
-		albumList = new ArrayList<Album>();
-		photoList = new ArrayList<Photo>();
-		conList = new ArrayList<Connection>();
-		albumNumCreate = 0;
+	public NonAdmin(String name){
+		this.username = name;
+		this.albumList = new ArrayList<Album>();
+		this.photoList = new ArrayList<Photo>();
+		this.conList = new ArrayList<Connection>();
+		this.albumNumCreate = 0;
+		//generates photo objects and connections for stock username
+		if (name.equals("stock")) {
+			this.createAlbum("stock");
+			//need to input stock files here using addphoto
+		}
 	}
 	//gets list of albums for this user
 	public ArrayList<Album> getAlbums() {

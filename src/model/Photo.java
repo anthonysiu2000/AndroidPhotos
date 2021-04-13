@@ -14,13 +14,13 @@ public class Photo implements Comparable<Photo> {
 	
 	//constructor
 	public Photo(File imageFile) {
-		filePath = imageFile.getPath();
-		caption = null;
+		this.filePath = imageFile.getPath();
+		this.caption = null;
 		Date date = new Date(imageFile.lastModified());
-		calDate = Calendar.getInstance();
-		calDate.setTime(date);
-		calDate.set(Calendar.MILLISECOND,0);
-		tags = new ArrayList<Tag>();
+		this.calDate = Calendar.getInstance();
+		this.calDate.setTime(date);
+		this.calDate.set(Calendar.MILLISECOND,0);
+		this.tags = new ArrayList<Tag>();
 		
 	}
 	//gets date
