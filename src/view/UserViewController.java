@@ -205,9 +205,10 @@ public class UserViewController {
 	}
 	
 	//method called when pressing delete album button
-	public void deleteAlbum(ActionEvent e) {
+	public void deleteAlbum() {
+		
 		//If we are on the second button press, put out an error
-		if (buttonNum == 2 && b != buttonCreate) {
+		if (buttonNum == 2) {
 			textError.setText("Error: Incorrect button press; Action reset.");
 			textFieldAlbum.setText("");
 			buttonNum = 1;
