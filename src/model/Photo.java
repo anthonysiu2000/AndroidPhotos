@@ -20,6 +20,12 @@ public class Photo implements Comparable<Photo> {
 	protected Calendar calDate;
 	protected ArrayList<Tag> tags;
 	
+	/**
+	 * Photo is a class that holds an image file and has various characteristics associated with it. These characteristics include date, time, tags, file path, caption, and album.
+	 * 
+	 * @param imageFile		Name of the image file
+	 * @see Album#Album(String)
+	 */
 	//constructor
 	public Photo(File imageFile) {
 		this.filePath = imageFile.getPath();
@@ -31,27 +37,63 @@ public class Photo implements Comparable<Photo> {
 		this.tags = new ArrayList<Tag>();
 		
 	}
+	/**
+	 * This method gets the date of the photo.
+	 * 
+	 * @return calDate
+	 */
 	//gets date
 	public Calendar getDate() {
 		return calDate;
 	}
+	
+	/**
+	 * This method gets the caption of the photo.
+	 * 
+	 * @return caption
+	 */
 	//gets caption
 	public String getCaption() {
 		return caption;
 	}
+	
+	/**
+	 * This method gets the file path of the photo.
+	 * 
+	 * @return filePath
+	 */
 	//gets path
 	public String getPath() {
 		return filePath;
 	}
+	
+	/**
+	 * This method gets the tags of the photo.
+	 * 
+	 * @return tags
+	 * @see Tag#Tag(String, String)
+	 */
 	//gets Tags
 	public ArrayList<Tag> getTags() {
 		return tags;
 	}
+	
+	/**
+	 * This method adds a tag to a photo and takes the required inputs for the tags.
+	 * 
+	 * @param inputTag		Tag taken as an input, the name and value.
+	 * @see Tag#Tag(String, String)
+	 */
 	//adds a tag
 	public void addTag(Tag inputTag) {
 		tags.add(inputTag);
 	}
 	@Override
+	/**
+	 * This method compares the dates of the photos,
+	 * 
+	 * @param photo		A photo file
+	 */
 	public int compareTo(Photo photo) {
 		return calDate.compareTo(photo.calDate);
 	}

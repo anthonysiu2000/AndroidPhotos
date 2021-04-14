@@ -9,10 +9,15 @@ package model;
  *
  */
 public abstract class User {
-	
+
 	//protected fields
 	protected String username;
 	
+	/**
+	 * This method gets the username of the User and outputs it as a String.
+	 * 
+	 * @return username
+	 */
 	//get user name of user
 	public String getUsername() {
 		return username;
