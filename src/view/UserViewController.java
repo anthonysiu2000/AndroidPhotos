@@ -46,8 +46,8 @@ public class UserViewController {
 	private Scene thisScene;
 	
 	//used for button management
-	private Button button = null;
-	private int buttonNum = 0;
+	private Button prevButton = null;
+	private int buttonNum = 1;
 	
 	//initiates the scene for the user
 	public void start(Stage mainStage, Scene prevScene, Scene thisScene, NonAdmin nonAdmin){
@@ -99,8 +99,20 @@ public class UserViewController {
 		}
 	}
 	
+	//Method called to reset details when finishing an action
+	public void resetDetail(Stage mainStage) {
+		textAlbumName.setText("Name: ");
+		textPhotoNum.setText("Photo #: ");
+		textEarliest.setText("Earliest Date: ");
+		textLatest.setText("Latest Date: ");
+		textFieldAlbum.setText("");
+		
+	}
+	
 	//method called when pressing the open album button
 	public void openAlbum() throws IOException {
+		buttonNum = 1;
+		resetDetail(stage);
 		int index = albumListView.getSelectionModel().getSelectedIndex();
 
 		//switches scene to Album view, given the currently selected album
@@ -119,6 +131,8 @@ public class UserViewController {
 	
 	//method called when pressing search photos button
 	public void searchPhotos() throws IOException {
+		resetDetail(stage);
+		buttonNum = 1;
 
 		//switches scene to UserView,
 		FXMLLoader searchLoader = new FXMLLoader();
@@ -139,7 +153,8 @@ public class UserViewController {
 	//NOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTENOTE
 	//method called when pressing logout button
 	public void logout(){
-
+		buttonNum = 1;
+		resetDetail(stage);
 		stage.setScene(prevScene);
 		stage.setTitle("Photos");
 		stage.setResizable(false);
@@ -149,9 +164,9 @@ public class UserViewController {
 	//method called when pressing create album button
 	public void createAlbum(ActionEvent e) {
 		Button b = (Button)e.getSource();
-		
+		prevButton = b;
 		//If the second button pressed is incorrect, we state an error, and do not pass the action
-		if (buttonNum == 2 && b != buttonCreate) {
+		if (buttonNum == 2 && prevButton != buttonCreate) {
 			textError.setText("Error: Incorrect button press; Action reset.");
 			textFieldAlbum.setText("");
 			buttonNum = 1;
@@ -169,14 +184,14 @@ public class UserViewController {
 		} else {
 			String inputAlbum = textFieldAlbum.getText().trim();
 			buttonNum = 1;
-			//username cannot be whitespace
+			//album cannot be whitespace
 			if (inputAlbum.isBlank()) {
 				textError.setText("Error: no album inputted");
 				textFieldAlbum.setText("");
 				return;
 			}
 			
-			//inputs username to database
+			//inputs album to database
 			boolean createSuccessful = nonAdmin.createAlbum(inputAlbum);
 			
 			//add successful
@@ -195,7 +210,7 @@ public class UserViewController {
 				albumListView.setItems(obsList); 
 
 				
-			//add unsuccessful due to username existing
+			//add unsuccessful due to album existing
 			} else {
 				textError.setText("Error: album already exists");
 				textFieldAlbum.setText("");
@@ -205,9 +220,10 @@ public class UserViewController {
 	}
 	
 	//method called when pressing delete album button
-	public void deleteAlbum() {
-		
-		//If we are on the second button press, put out an error
+	public void deleteAlbum(ActionEvent e) {
+		Button b = (Button)e.getSource();
+		prevButton = b;
+		//If we are on the second or third button press, put out an error
 		if (buttonNum == 2) {
 			textError.setText("Error: Incorrect button press; Action reset.");
 			textFieldAlbum.setText("");
@@ -215,11 +231,102 @@ public class UserViewController {
 			return;
 		}
 		textError.setText("");
+
+		//If empty list, output error
+		if (nonAdmin.getAlbums().size() == 0) {
+			textError.setText("Error: nothing to delete.");
+			textFieldAlbum.setText("");
+			return;
+		}
+		
+		//Deletes album from user database
+		int index = albumListView.getSelectionModel().getSelectedIndex();
+		if (index < 0) {
+			textError.setText("No Album Selected");
+			textFieldAlbum.setText("");
+			return;
+		}
+		String albumDeleted = nonAdmin.getAlbums().get(index).getName();
+		nonAdmin.deleteAlbum(albumDeleted);
+		
+		
+		//gets list of albums for user
+		ArrayList<String> albums = new ArrayList<String>();
+		for (int i = 0; i < nonAdmin.getAlbums().size(); i++) {
+			albums.add(nonAdmin.getAlbums().get(i).getName());
+		}
+		
+		//updates ListView
+		obsList = FXCollections.observableArrayList(albums); 
+		albumListView.setItems(obsList); 
+		resetDetail(stage);
+		
+		textError.setText("Delete Successful.");
+		textFieldAlbum.setText("");
+		if (nonAdmin.getAlbums().size() == 0) {
+			return;
+		}
+		else if (index < nonAdmin.getAlbums().size()) {
+			albumListView.getSelectionModel().select(index);
+		}
+		else {
+			albumListView.getSelectionModel().select(index - 1);
+		}
 		
 	}
 	
 	//method called when pressing rename album button
 	public void renameAlbum(ActionEvent e) {
+		Button b = (Button)e.getSource();
+		prevButton = b;
+		//If the second button pressed is incorrect, we state an error, and do not pass the action
+		if ((buttonNum == 2) && prevButton != buttonRename) {
+			textError.setText("Error: Incorrect button press; Action reset.");
+			textFieldAlbum.setText("");
+			buttonNum = 1;
+			return;
+		}
+		textError.setText("");
 		
+		//First Button Press
+		if (buttonNum == 1) {
+			//Instructs user
+			textError.setText("Please input new name for selected album then press Create again.");
+			buttonNum = 2;
+		
+		//Second Button Press	
+		} else {
+			int index = albumListView.getSelectionModel().getSelectedIndex();
+			if (index < 0) {
+				textError.setText("No Album Selected");
+				textFieldAlbum.setText("");
+				return;
+			}
+			String newName = textFieldAlbum.getText().trim();
+			buttonNum = 1;
+			//album cannot be whitespace
+			if (newName.isBlank()) {
+				textError.setText("Error: no album inputted");
+				textFieldAlbum.setText("");
+				return;
+			}
+					
+			//inputs album to database
+			nonAdmin.renameAlbum(nonAdmin.getAlbums().get(index).getName(), newName);
+			
+			textError.setText("Album Rename Successful");
+			textFieldAlbum.setText("");
+			//gets list of albums for user
+			ArrayList<String> albums = new ArrayList<String>();
+			for (int i = 0; i < nonAdmin.getAlbums().size(); i++) {
+				albums.add(nonAdmin.getAlbums().get(i).getName());
+			}
+					
+			//updates ui to list of albums
+			obsList = FXCollections.observableArrayList(albums); 
+			albumListView.setItems(obsList); 
+				
+			albumListView.getSelectionModel().select(index);
+		}
 	}
 }

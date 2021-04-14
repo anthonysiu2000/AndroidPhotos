@@ -217,7 +217,7 @@ public class AdminController {
 				return;
 			}
 			
-			//Deletes song from user database
+			//Deletes user from user database
 			int index = userList.getSelectionModel().getSelectedIndex();
 			User userDeleted = database.getUsers().get(index);
 			boolean deleteSuccessful = database.removeUser(userDeleted.getUsername());

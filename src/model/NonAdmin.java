@@ -95,13 +95,36 @@ public class NonAdmin extends User {
 	 */
 	//deletes an album; returns true if successful
 	public boolean deleteAlbum(String aName) {
-		for (int i = 0; i < albumList.size(); i++) {
+		boolean foundAlbum = false;
+		for (int i = albumList.size()-1; i >= 0; i--) {
 			if (albumList.get(i).getName().equals(aName)) {
 				albumList.remove(i);
 				return true;
 			}
 		}
-		return false;
+		if (!foundAlbum) {
+			return false;
+		}
+		//removes connections linked to albums
+		for (int j = conList.size()-1; j >= 0; j--) {
+			if (conList.get(j).getAlbum().equals(aName)) {
+				conList.remove(j);
+			}
+		}
+		//removes photos with connection to this album only
+		for (int k = photoList.size()-1; k >= 0; k--) {
+			boolean photoFound = false;
+			String photoPath = photoList.get(k).getPath();
+			for (int l = 0; l < conList.size(); l++) {
+				if (photoPath.equals(conList.get(l).getPath())) {
+					photoFound = true;
+				}
+			}
+			if (!photoFound) {
+				photoList.remove(k);
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -206,7 +229,7 @@ public class NonAdmin extends User {
 		boolean albumFound = false;
 		boolean conFound = false;
 		int numCon = 0;
-		//finds the album that we want to insert photo
+		//finds the album that we want to remove photo
 		for (int i = 0; i < albumList.size(); i++) {
 			if (albumList.get(i).getName().equals(aName)) {
 				albumFound = true;
@@ -217,7 +240,7 @@ public class NonAdmin extends User {
 			return false;
 		}
 		//finds photo in connection list and removes it
-		for (int j = 0; j < conList.size(); j++) {
+		for (int j = conList.size()-1; j >= 0; j--) {
 			if (conList.get(j).getPath().equals(photoPath)) {
 				if (conList.get(j).getAlbum().equals(aName)) {
 					conList.remove(j);
@@ -231,7 +254,7 @@ public class NonAdmin extends User {
 		}
 		//finds photo in the album and removes it if no other album references it
 		if (numCon == 1) {
-			for (int k = 0; k < photoList.size(); k++) {
+			for (int k = photoList.size()-1; k >= 0; k--) {
 				if (photoList.get(k).getPath().equals(photoPath)) {
 					photoList.remove(k);
 				}
@@ -272,7 +295,7 @@ public class NonAdmin extends User {
 		Tag tag = new Tag(tagName, tagValue);
 		for (int k = 0; k < photoList.size(); k++) {
 			if (photoList.get(k).getPath().equals(photoPath)) {
-				photoList.get(k).tags.add(tag);
+				photoList.get(k).addTag(tag);
 				return true;
 			}
 		}
@@ -293,7 +316,7 @@ public class NonAdmin extends User {
 		for (int k = 0; k < photoList.size(); k++) {
 			if (photoList.get(k).getPath().equals(photoPath)) {
 				//checks if the tag exists
-				for (int i = 0; i < photoList.get(k).tags.size(); i++) {
+				for (int i = photoList.get(k).tags.size()-1; i >= 0; i--) {
 					if (photoList.get(k).tags.get(i).getName() == tagName && 
 							photoList.get(k).tags.get(i).getValue() == tagValue) {
 						photoList.get(k).tags.remove(i);
@@ -337,7 +360,7 @@ public class NonAdmin extends User {
 	 * 
 	 * @param oAlbName		Old name of the album
 	 * @param nAlbName		New name of the album
-	 * @param photoPath		Name of the photo path
+	 * @param photoPath		Name of the photo pathd
 	 * @return boolean
 	 */
 	//moves a photo from an album to another; returns true if successful
@@ -345,7 +368,7 @@ public class NonAdmin extends User {
 		//copies photo to new album
 		if (copyPhoto(oAlbName, nAlbName, photoPath)) {
 			//removes old photo to album connection
-			for (int i = 0; i < conList.size(); i++) {
+			for (int i = conList.size()-1; i >= 0; i--) {
 				if (conList.get(i).getAlbum() == oAlbName && conList.get(i).getPath() == photoPath) {
 					conList.remove(i);
 					return true;
