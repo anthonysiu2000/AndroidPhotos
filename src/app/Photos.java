@@ -1,8 +1,7 @@
 
-//made by Anthony Siu and Benjamin Lee
-
-
 package app;
+
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +16,27 @@ import view.SearchController;
 import view.SlideshowController;
 import view.UserViewController;
 
+/**
+ * Photos is a single-user photo application that allows storage and management of photos in one or more albums.
+ * 
+ * @author 		Anthony Siu
+ * @author 		Benjamin Lee
+ * @version		%I% %G%
+ * @since		1.0
+ *
+ */
+
 public class Photos extends Application{
 
+	/**
+	 * The method Photos is the center of where the other classes refer back to and eventually get displayed.
+	 * <p>
+	 * This method loads in the FXML from the code and displays it on the screen.
+	 * <p>
+
+	 * @param args			Part of method creation.
+	 * @throws Exception	Signals that an Exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
