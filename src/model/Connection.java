@@ -15,15 +15,8 @@ public class Connection {
 	 * the path of the photo
 	 */
 	private String photoPath;
-<<<<<<< HEAD
 	protected String aName;
-=======
 	
-	/**
-	 * the name of the album
-	 */
-	private String aName;
->>>>>>> 065e1d21d6d0429393854241d87f26c5b5564b3a
 	
 	/**
 	 * Connection is a class that has interactions with albums.
