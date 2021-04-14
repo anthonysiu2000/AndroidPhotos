@@ -1,4 +1,5 @@
 package view;
+<<<<<<< HEAD
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,17 @@ import javafx.stage.Stage;
 import model.Database;
 import model.User;
 
+=======
+/**
+ * Photos is a single-user photo application that allows storage and management of photos in one or more albums.
+ * 
+ * @author 		Anthony Siu
+ * @author 		Benjamin Lee
+ * @version		%I% %G%
+ * @since		1.0
+ *
+ */
+>>>>>>> f381ef93705231b2352f33c7b9a2063915c2fd7b
 public class LoginController {
 	@FXML private TextField userNameField;
 	@FXML private Button buttonLogin;
