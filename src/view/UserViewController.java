@@ -56,7 +56,7 @@ public class UserViewController {
 		this.stage = mainStage;
 		this.prevScene = prevScene;
 		this.thisScene = thisScene;
-		textError.setText("");
+		textError.setText(" ");
 		textWelcome.setText("Welcome " + nonAdmin.getUsername());
 		
 		//gets list of albums for user
@@ -72,12 +72,15 @@ public class UserViewController {
 		// checks if the list is empty, and sends warning, not an error
 		if (albums.isEmpty()) {
 			textError.setText("Album List is Empty. Add albums please.");
-		}
+		} 
 		
 		// List listening function
 		albumListView.getSelectionModel().selectedIndexProperty().addListener(
 				(obs, oldVal, newVal) -> showDetail(mainStage));
 		
+		if (!albums.isEmpty()) {
+			albumListView.getSelectionModel().select(0);
+		}
 	}
 
 	//Method called when selecting an item from this list
@@ -109,6 +112,23 @@ public class UserViewController {
 		
 	}
 	
+	//method called when we return to this scene
+	public void resetListView(Stage mainStage) {
+		textError.setText("");
+		textWelcome.setText("Welcome " + nonAdmin.getUsername());
+		prevButton = null;
+		
+		//gets list of albums for user
+		ArrayList<String> albums = new ArrayList<String>();
+		for (int i = 0; i < nonAdmin.getAlbums().size(); i++) {
+			albums.add(nonAdmin.getAlbums().get(i).getName());
+		}
+		
+		//updates ui to list of albums
+		obsList = FXCollections.observableArrayList(albums); 
+		albumListView.setItems(obsList); 
+	}
+	
 	//method called when pressing the open album button
 	public void openAlbum() throws IOException {
 		buttonNum = 1;
@@ -122,7 +142,7 @@ public class UserViewController {
 		Scene albumViewScene = new Scene(albumViewRoot);
 		AlbumViewController albumViewController = albumViewLoader.getController();
 		
-		//albumViewController.start(stage, thisScene, albumViewScene, nonAdmin, index);
+		albumViewController.start(stage, thisScene, albumViewScene, nonAdmin, index);
 		stage.setScene(albumViewScene);
 		stage.setTitle("UserView");
 		stage.setResizable(false);

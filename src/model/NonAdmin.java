@@ -342,6 +342,16 @@ public class NonAdmin extends User {
 		//checks if the photo exists
 		for (int k = 0; k < photoList.size(); k++) {
 			if (photoList.get(k).getPath().equals(photoPath)) {
+				//checks that the album exists
+				boolean albumExists = false;
+				for (int j = 0; j < albumList.size(); j++) {
+					if (albumList.get(j).getName().equals(nAlbName)) {
+						return albumExists = true;
+					}
+				}
+				if (!albumExists) {
+					return false;
+				}
 				//checks if there is already an instance of the photo in the target album
 				for (int i = 0; i < conList.size(); i++) {
 					if (conList.get(i).getAlbum() == nAlbName && conList.get(i).getPath() == photoPath) {
