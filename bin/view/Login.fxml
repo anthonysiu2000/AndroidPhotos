@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
    <children>
       <Text layoutX="184.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Photos">
          <font>
@@ -20,13 +20,13 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="136.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error Message" wrappingWidth="328.1875" />
-      <TextField layoutX="213.0" layoutY="202.0">
+      <Text fx:id="errorMessage" layoutX="136.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error Message" wrappingWidth="328.1875" />
+      <TextField fx:id="userNameField" layoutX="213.0" layoutY="202.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button layoutX="397.0" layoutY="202.0" mnemonicParsing="false" text="Login">
+      <Button fx:id="buttonLogin" layoutX="397.0" layoutY="202.0" mnemonicParsing="false" onAction="#buttonPress" text="Login">
          <font>
             <Font size="14.0" />
          </font>
