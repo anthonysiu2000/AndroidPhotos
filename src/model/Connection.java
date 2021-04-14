@@ -10,7 +10,15 @@ package model;
  */
 public class Connection {
 	//fields
+	
+	/**
+	 * the path of the photo
+	 */
 	private String photoPath;
+	
+	/**
+	 * the name of the album
+	 */
 	private String aName;
 	
 	/**

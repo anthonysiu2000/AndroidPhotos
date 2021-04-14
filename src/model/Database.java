@@ -11,6 +11,10 @@ package model;
 import java.util.ArrayList;
 
 public class Database {
+	
+	/**
+	 * an array list of Users that are in the database
+	 */
 	//fields
 	private ArrayList<User> userbase;
 	
