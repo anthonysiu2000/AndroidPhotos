@@ -27,7 +27,7 @@ public class AdminController {
 	//stores database and stage, as inputed according to main class
 	private Stage stage;
 	private Database database;
-	
+	private Scene prevScene;
 	//Used for button management
 	private int buttonNumber = 1;
 
@@ -38,7 +38,8 @@ public class AdminController {
 	private boolean listed = false;
 	
 	//method called when initiating this scene
-	public void start(Stage mainStage, Database database){
+	public void start(Stage mainStage, Scene prevScene, Database database){
+		this.prevScene = prevScene;
 		this.stage = mainStage;
 		this.database = database;
 		errorMessage.setText("");
@@ -143,7 +144,7 @@ public class AdminController {
 				return;
 			}
 			
-			//Deletes song from Song Library
+			//Deletes song from user database
 			int index = userList.getSelectionModel().getSelectedIndex();
 			User userDeleted = database.getUsers().get(index);
 			boolean deleteSuccessful = database.removeUser(userDeleted.getUsername());
@@ -190,14 +191,7 @@ public class AdminController {
 		else {
 			
 			//sets the new scene as a login scene
-			FXMLLoader loginLoader = new FXMLLoader();
-			loginLoader.setLocation(getClass().getResource("/view/Login.fxml"));
-			AnchorPane loginRoot = (AnchorPane)loginLoader.load();
-			Scene loginScene = new Scene(loginRoot);
-			LoginController loginController = loginLoader.getController();
-			
-			loginController.start(stage, database);
-			stage.setScene(loginScene);
+			stage.setScene(prevScene);
 			stage.setTitle("Photos");
 			stage.setResizable(false);
 			stage.show();

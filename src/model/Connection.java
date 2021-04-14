@@ -11,7 +11,7 @@ package model;
 public class Connection {
 	//fields
 	private String photoPath;
-	private String aName;
+	protected String aName;
 	
 	/**
 	 * Connection is a class that has interactions with albums.

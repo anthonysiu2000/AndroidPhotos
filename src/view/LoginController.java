@@ -1,5 +1,4 @@
 package view;
-<<<<<<< HEAD
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,9 +13,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Database;
+import model.NonAdmin;
 import model.User;
 
-=======
 /**
  * Photos is a single-user photo application that allows storage and management of photos in one or more albums.
  * 
@@ -26,22 +25,23 @@ import model.User;
  * @since		1.0
  *
  */
->>>>>>> f381ef93705231b2352f33c7b9a2063915c2fd7b
 public class LoginController {
 	@FXML private TextField userNameField;
 	@FXML private Button buttonLogin;
 	@FXML private Text errorMessage;
 	
 	private Stage stage;
+	private Scene thisScene;
 	
 	//stores database, as inputed according to main class
 	Database database;
 	
 	
 	//method called to initialize the scene
-	public void start(Stage mainStage, Database database){
+	public void start(Stage mainStage, Scene thisScene, Database database){
 		this.stage = mainStage;
 		this.database = database;
+		this.thisScene = thisScene;
 		errorMessage.setText("");
 	}
 
@@ -59,7 +59,7 @@ public class LoginController {
 			Scene adminScene = new Scene(adminRoot);
 			AdminController adminController = adminLoader.getController();
 			
-			adminController.start(stage, database);
+			adminController.start(stage, thisScene, database);
 			stage.setScene(adminScene);
 			stage.setTitle("AdminView");
 			stage.setResizable(false);
@@ -70,10 +70,11 @@ public class LoginController {
 			//finds user and puts it into "user" variable
 			ArrayList<User> users = database.getUsers();
 			boolean nameFound = false;
-			User user;
+			NonAdmin user = null;
 			for (int i = 0; i < users.size(); i++) {
 				if (inputName.equals(users.get(i).getUsername())) {
-					user = users.get(i);
+					user = (NonAdmin) users.get(i);
+					nameFound = true;
 				}
 			}
 			if (!nameFound) {
@@ -81,14 +82,14 @@ public class LoginController {
 				return;
 			}
 			
-			//switches scene to UserView,
+			//switches scene to UserView
 			FXMLLoader userViewLoader = new FXMLLoader();
 			userViewLoader.setLocation(getClass().getResource("/view/UserView.fxml"));
 			AnchorPane userViewRoot = (AnchorPane)userViewLoader.load();
 			Scene userViewScene = new Scene(userViewRoot);
 			UserViewController userViewController = userViewLoader.getController();
 			
-			//userViewController.start(stage, user);
+			userViewController.start(stage, thisScene, userViewScene, user);
 			stage.setScene(userViewScene);
 			stage.setTitle("UserView");
 			stage.setResizable(false);

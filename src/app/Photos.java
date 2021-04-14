@@ -2,13 +2,11 @@
 
 package app;
 
-import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import view.AdminController;
 import view.AlbumViewController;
@@ -95,7 +93,7 @@ public class Photos extends Application{
 		
 		
 		//initializes the primaryStage as the login scene to the UI
-		loginController.start(primaryStage, database);
+		loginController.start(primaryStage, loginScene, database);
 		primaryStage.setScene(loginScene);
 		primaryStage.setTitle("Photos");
 		primaryStage.setResizable(false);

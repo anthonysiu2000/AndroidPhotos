@@ -113,13 +113,22 @@ public class NonAdmin extends User {
 	 */
 	//renames an album; returns true if successful
 	public boolean renameAlbum(String oName, String nName) {
+		boolean foundAlbum = false;
 		for (int i = 0; i < albumList.size(); i++) {
 			if (albumList.get(i).getName().equals(oName)) {
 				albumList.get(i).aName = nName;
-				return true;
+				foundAlbum = true;
 			}
 		}
-		return false;
+		if (!foundAlbum) {
+			return false;
+		}
+		for (int j = 0; j < conList.size(); j++) {
+			if (conList.get(j).getAlbum().equals(oName)) {
+				conList.get(j).aName = nName;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -469,6 +478,9 @@ public class NonAdmin extends User {
 	 */
 	//returns earliest Calendar entry of the Album
 	public Calendar getAlbumEarliest(String aName) {
+		if (photoList.size() == 0) {
+			return null;
+		}
 		Calendar earliest = photoList.get(0).getDate();
 		for (int i = 0; i < conList.size(); i++) {
 			if (conList.get(i).getAlbum().equals(aName)) {
@@ -491,6 +503,9 @@ public class NonAdmin extends User {
 	 */
 	//returns latest Calendar entry of the Album
 	public Calendar getAlbumLatest(String aName) {
+		if (photoList.size() == 0) {
+			return null;
+		}
 		Calendar latest = photoList.get(0).getDate();
 		for (int i = 0; i < conList.size(); i++) {
 			if (conList.get(i).getAlbum().equals(aName)) {
