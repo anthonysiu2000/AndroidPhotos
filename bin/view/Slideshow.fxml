@@ -6,12 +6,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SlideshowController">
    <children>
-      <ImageView fitHeight="375.0" fitWidth="500.0" layoutX="50.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false" text="&lt;" />
-      <Button layoutX="562.0" layoutY="188.0" mnemonicParsing="false" text="&gt;" />
-      <Button layoutX="554.0" layoutY="368.0" mnemonicParsing="false" text="Back" />
+      <ImageView fx:id="imageview" fitHeight="375.0" fitWidth="500.0" layoutX="50.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="buttonLeft" layoutX="14.0" layoutY="188.0" mnemonicParsing="false" onAction="#backward" text="&lt;" />
+      <Button fx:id="buttonRight" layoutX="562.0" layoutY="188.0" mnemonicParsing="false" onAction="#forward" text="&gt;" />
+      <Button fx:id="buttonAlbum" layoutX="554.0" layoutY="368.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
    </children>
 </AnchorPane>

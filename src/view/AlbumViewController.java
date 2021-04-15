@@ -339,7 +339,7 @@ public class AlbumViewController {
 		Scene slideshowScene = new Scene(slideshowRoot);
 		SlideshowController slideshowController = slideshowLoader.getController();
 		
-		//slideshowController.start(stage, thisScene, nonAdmin, index);
+		slideshowController.start(stage, thisScene, nonAdmin, index, true);
 		stage.setScene(slideshowScene);
 		stage.setTitle("searchView");
 		stage.setResizable(false);
@@ -357,7 +357,7 @@ public class AlbumViewController {
 		Scene slideshowScene = new Scene(slideshowRoot);
 		SlideshowController slideshowController = slideshowLoader.getController();
 				
-		//slideshowController.start(stage, thisScene, nonAdmin, index);
+		//slideshowController.start(stage, thisScene, nonAdmin, index, false);
 		stage.setScene(slideshowScene);
 		stage.setTitle("searchView");
 		stage.setResizable(false);
