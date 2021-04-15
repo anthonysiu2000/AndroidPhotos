@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="javadoc">
     <target name="javadoc">
-        <javadoc access="public" author="true" classpath="D:\Computing\javafx-sdk-11.0.2\lib\javafx.controls.jar;D:\Computing\javafx-sdk-11.0.2\lib\javafx-swt.jar;D:\Computing\javafx-sdk-11.0.2\lib\javafx.swing.jar;D:\Computing\javafx-sdk-11.0.2\lib\javafx.web.jar;D:\Computing\javafx-sdk-11.0.2\lib\javafx.fxml.jar;D:\Computing\javafx-sdk-11.0.2\lib\javafx.graphics.jar;D:\Computing\javafx-sdk-11.0.2\lib\javafx.base.jar;D:\Computing\javafx-sdk-11.0.2\lib\javafx.media.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="app,view,model" source="11" sourcepath="src" splitindex="true" use="true" version="true"/>
+        <javadoc access="public" author="true" classpath="." destdir="doc" doctitle="Java FTP Client Utility API Photos34" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="chess" source="11" sourcepath="src" splitindex="true" use="true" version="true"/>
     </target>
 </project>

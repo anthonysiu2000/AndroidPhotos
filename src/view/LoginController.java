@@ -36,7 +36,13 @@ public class LoginController {
 	//stores database, as inputed according to main class
 	Database database;
 	
-	
+	/**
+	 * The method called to initialize the scene for the login controller.
+	 * 
+	 * @param mainStage
+	 * @param thisScene
+	 * @param database
+	 */
 	//method called to initialize the scene
 	public void start(Stage mainStage, Scene thisScene, Database database){
 		this.stage = mainStage;
@@ -44,7 +50,13 @@ public class LoginController {
 		this.thisScene = thisScene;
 		errorMessage.setText("");
 	}
-
+	
+	/**
+	 * The method called when button is pressed.
+	 * 
+	 * @param e
+	 * @throws IOException
+	 */
 	//Method called when button is pressed
 	public void buttonPress(ActionEvent e) throws IOException {
 		String inputName = userNameField.getText();

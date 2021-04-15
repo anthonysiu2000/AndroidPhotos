@@ -9,15 +9,15 @@ package model;
  *
  */
 public class Album {
-	/**
-	 * Album is a class that has special interactions with non admin users. Albums store photos that can be added by users.
-	 * 
-	 * @param name		The name of the album will be inputted by the user who creates it.
-	 * @see User#User()
-	 */
 	//private fields
 	protected String aName;
 	
+	/**
+	 * Album is a class that has special interactions with non admin users. Albums store photos that can be added by users.
+	 * 
+	 * @param name		Name of the album
+	 * @see User#User()
+	 */
 	//constructor
 	public Album(String name) {
 		this.aName = name;
