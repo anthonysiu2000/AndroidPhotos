@@ -58,7 +58,7 @@ public class PhotoEditController {
 				}
 				
 				//sets date text
-				textDate.setText(nonAdmin.getPhotos().get(i).getDate().toString());
+				textDate.setText(nonAdmin.getPhotos().get(i).getDate().getTime().toString());
 				
 				//sets Tags
 				ArrayList<Tag> tagList = nonAdmin.getPhotos().get(i).getTags();
