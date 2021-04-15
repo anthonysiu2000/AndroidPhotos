@@ -295,6 +295,13 @@ public class NonAdmin extends User {
 		Tag tag = new Tag(tagName, tagValue);
 		for (int k = 0; k < photoList.size(); k++) {
 			if (photoList.get(k).getPath().equals(photoPath)) {
+				for (int i = 0; i < photoList.get(k).getTags().size(); i++) {
+					if (photoList.get(k).getTags().get(i).getName().equals(tagName)) {
+						if (photoList.get(k).getTags().get(i).getValue().equals(tagValue)) {
+							return false;
+						}
+					}
+				}
 				photoList.get(k).addTag(tag);
 				return true;
 			}
@@ -422,7 +429,7 @@ public class NonAdmin extends User {
 	 * @return sortedPhotos
 	 */
 	//returns an array of photos that have the tags specified; if 2, uses andOp boolean to specify "and" or "or"
-	public ArrayList<Photo> serachPhotoByTag(Tag tag1, Tag tag2, boolean andOp) {
+	public ArrayList<Photo> searchPhotoByTag(Tag tag1, Tag tag2, boolean andOp) {
 		//creates new array list
 		ArrayList<Photo> sortedPhotos = new ArrayList<Photo>();
 		for (int j = 0; j < photoList.size(); j++) {

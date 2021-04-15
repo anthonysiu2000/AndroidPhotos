@@ -18,16 +18,16 @@
             <Font size="32.0" />
          </font>
       </Text>
-      <ListView layoutX="10.0" layoutY="29.0" prefHeight="361.0" prefWidth="272.0" />
+      <ListView fx:id="photoListView" layoutX="10.0" layoutY="29.0" prefHeight="361.0" prefWidth="272.0" />
       <Text layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Results:" />
-      <Button layoutX="295.0" layoutY="354.0" mnemonicParsing="false" text="Create Album Using Results" />
-      <Button layoutX="356.0" layoutY="142.0" mnemonicParsing="false" text="Search by Date Range" />
-      <Button layoutX="371.0" layoutY="260.0" mnemonicParsing="false" text="Search by Tag(s)" />
-      <Button layoutX="468.0" layoutY="354.0" mnemonicParsing="false" text="Back to Album List" />
-      <TextField layoutX="416.0" layoutY="175.0" prefHeight="25.0" prefWidth="174.0" />
-      <Text layoutX="300.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error/Status Message" wrappingWidth="292.0" />
-      <DatePicker layoutX="391.0" layoutY="82.0" />
-      <DatePicker layoutX="391.0" layoutY="109.0" />
+      <Button fx:id="buttonCreate" layoutX="295.0" layoutY="354.0" mnemonicParsing="false" onAction="#createAlbum" text="Create Album Using Results" />
+      <Button fx:id="buttonDate" layoutX="356.0" layoutY="142.0" mnemonicParsing="false" onAction="#dateRange" text="Search by Date Range" />
+      <Button fx:id="buttonTag" layoutX="371.0" layoutY="260.0" mnemonicParsing="false" onAction="#searchTag" text="Search by Tag(s)" />
+      <Button fx:id="buttonBack" layoutX="468.0" layoutY="354.0" mnemonicParsing="false" onAction="#backUserView" text="Back to Album List" />
+      <TextField fx:id="textFieldTag1Name" layoutX="416.0" layoutY="175.0" prefHeight="25.0" prefWidth="79.0" />
+      <Text fx:id="textError" layoutX="300.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error/Status Message" wrappingWidth="292.0" />
+      <DatePicker fx:id="startDate" layoutX="391.0" layoutY="82.0" />
+      <DatePicker fx:id="endDate" layoutX="391.0" layoutY="109.0" />
       <Text layoutX="297.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date:">
          <font>
             <Font size="18.0" />
@@ -38,7 +38,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField layoutX="416.0" layoutY="201.0" prefHeight="25.0" prefWidth="174.0" />
+      <TextField fx:id="textFieldTag2Name" layoutX="416.0" layoutY="201.0" prefHeight="25.0" prefWidth="79.0" />
       <Text layoutX="297.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1st Tag:">
          <font>
             <Font size="18.0" />
@@ -49,6 +49,8 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <RadioButton layoutX="301.0" layoutY="234.0" mnemonicParsing="false" text="Toggle on for AND; off for OR; N/A for single tag" />
+      <RadioButton fx:id="radioAndOr" layoutX="301.0" layoutY="234.0" mnemonicParsing="false" text="Toggle on for AND; off for OR; N/A for single tag" />
+      <TextField fx:id="textFieldTag2Value" layoutX="507.0" layoutY="201.0" prefHeight="25.0" prefWidth="79.0" />
+      <TextField fx:id="textFieldTag1Value" layoutX="507.0" layoutY="175.0" prefHeight="25.0" prefWidth="79.0" />
    </children>
 </AnchorPane>

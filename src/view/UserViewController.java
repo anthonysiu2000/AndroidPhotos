@@ -144,7 +144,7 @@ public class UserViewController {
 		
 		albumViewController.start(stage, thisScene, albumViewScene, nonAdmin, index);
 		stage.setScene(albumViewScene);
-		stage.setTitle("UserView");
+		stage.setTitle("AlbumView");
 		stage.setResizable(false);
 		stage.show();
 	}
@@ -161,7 +161,7 @@ public class UserViewController {
 		Scene searchScene = new Scene(searchRoot);
 		SearchController searchController = searchLoader.getController();
 		
-		//searchController.start(stage, thisScene, nonAdmin);
+		searchController.start(stage, thisScene, nonAdmin);
 		stage.setScene(searchScene);
 		stage.setTitle("searchView");
 		stage.setResizable(false);

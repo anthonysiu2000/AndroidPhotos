@@ -18,13 +18,13 @@
       </Text>
       <ListView fx:id="photoListView" layoutX="10.0" layoutY="29.0" prefHeight="361.0" prefWidth="234.0" />
       <Text layoutX="14.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Photos in Album:" />
-      <Button fx:id="buttonAdd" layoutX="269.0" layoutY="115.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Add Photo" />
-      <Button fx:id="buttonRemove" layoutX="269.0" layoutY="153.0" mnemonicParsing="false" text="Remove Photo" />
-      <Button fx:id="buttonCopy" layoutX="465.0" layoutY="115.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Copy Photo" />
+      <Button fx:id="buttonAdd" layoutX="269.0" layoutY="115.0" mnemonicParsing="false" onAction="#addPhoto" prefHeight="25.0" prefWidth="94.0" text="Add Photo" />
+      <Button fx:id="buttonRemove" layoutX="269.0" layoutY="153.0" mnemonicParsing="false" onAction="#removePhoto" text="Remove Photo" />
+      <Button fx:id="buttonCopy" layoutX="465.0" layoutY="115.0" mnemonicParsing="false" onAction="#copyPhoto" prefHeight="25.0" prefWidth="81.0" text="Copy Photo" />
       <Button fx:id="buttonEdit" layoutX="446.0" layoutY="315.0" mnemonicParsing="false" onAction="#editPhoto" prefHeight="25.0" prefWidth="119.0" text="Edit/Display Photo" />
       <Button fx:id="buttonUserView" layoutX="446.0" layoutY="355.0" mnemonicParsing="false" onAction="#backUserView" prefHeight="25.0" prefWidth="119.0" text="Back to Album List" />
       <Text fx:id="textError" layoutX="263.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error/Status Message" wrappingWidth="319.0" />
-      <Button fx:id="buttonMove" layoutX="465.0" layoutY="153.0" mnemonicParsing="false" text="Move Photo" />
+      <Button fx:id="buttonMove" layoutX="465.0" layoutY="153.0" mnemonicParsing="false" onAction="#movePhoto" text="Move Photo" />
       <Button fx:id="buttonSlideShowF" layoutX="257.0" layoutY="315.0" mnemonicParsing="false" onAction="#slideshowF" prefHeight="25.0" prefWidth="148.0" text="Slideshow In Order" />
       <Button fx:id="buttonSlideShowR" layoutX="257.0" layoutY="355.0" mnemonicParsing="false" onAction="#slideshowR" prefHeight="25.0" prefWidth="148.0" text="Slideshow Reverse Order" />
       <TextField fx:id="textFieldAlbum" layoutX="263.0" layoutY="197.0" prefHeight="25.0" prefWidth="319.0" />
