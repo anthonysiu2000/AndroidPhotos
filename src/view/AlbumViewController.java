@@ -101,8 +101,14 @@ public class AlbumViewController {
 		//gets list of photo paths for user
 		ArrayList<String> photos = new ArrayList<String>();
 		for (int i = 0; i < nonAdmin.getConnections().size(); i++) {
-			if (nonAdmin.getConnections().get(i).getAlbum().equals(nonAdmin.getAlbums().get(index).getName())) {
+			//finds connections that have the same album as this one
+			
+			String conAlbumName = nonAdmin.getConnections().get(i).getAlbum();
+			String thisAlbumName = nonAdmin.getAlbums().get(index).getName();
+			
+			if (conAlbumName.equals(thisAlbumName)) {
 				photos.add(nonAdmin.getConnections().get(i).getPath());
+				
 			}
 		}
 		
@@ -135,6 +141,10 @@ public class AlbumViewController {
                 i++;
             }
         });
+		
+		if (photos.isEmpty()) {
+			System.out.println("nothing in photos");
+		}
 		
 		// checks if the list is empty, and sends warning, not an error
 		if (!photos.isEmpty()) {

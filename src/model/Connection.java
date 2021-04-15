@@ -25,7 +25,7 @@ public class Connection {
 	 * @see Album#Album(String)
 	 */
 	//constructor
-	public Connection(String path, String album) {
+	public Connection(String album, String path) {
 		this.photoPath = path;
 		this.aName = album;
 	}

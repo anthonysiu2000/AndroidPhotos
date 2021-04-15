@@ -115,7 +115,7 @@ public class SearchController {
 			boolean and = true;
 			
 			//gets the list of photos
-			photos = nonAdmin.searchPhotoByTag(tag1, tag2, and);
+			photos = nonAdmin.seachPhotoByTag(tag1, tag2, and);
 			//reset back to normal
 			textFieldTag1Name.setText("");
 			textFieldTag1Value.setText("");
