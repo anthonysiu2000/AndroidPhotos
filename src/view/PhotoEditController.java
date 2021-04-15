@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
@@ -73,7 +74,7 @@ public class PhotoEditController {
 			}
 		}
 		//sets the imageview to the image provided by path
-		Image image = new Image(path);
+		Image image = new Image(new File(path).toURI().toString());
 		imageView.setImage(image);
 		
 	}
