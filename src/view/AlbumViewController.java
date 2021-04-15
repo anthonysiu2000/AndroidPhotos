@@ -420,8 +420,8 @@ public class AlbumViewController {
 		buttonNum = 1;
 		
 		//gets path of photo we want to edit
-		int index = photoListView.getSelectionModel().getSelectedIndex();
-		if (index < 0) {
+		int photoIndex = photoListView.getSelectionModel().getSelectedIndex();
+		if (photoIndex < 0) {
 			textError.setText("No photos to enter");
 			return;
 		}
@@ -431,7 +431,7 @@ public class AlbumViewController {
 			//if the connection belongs to this album
 			if (nonAdmin.getConnections().get(i).getAlbum().equals(nonAdmin.getAlbums().get(index).getName())) {
 				//the path of the photo of this album is set in path
-				if (parse == index) {
+				if (parse == photoIndex) {
 					path = nonAdmin.getConnections().get(i).getPath();
 					break;
 				}

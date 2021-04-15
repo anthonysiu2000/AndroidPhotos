@@ -36,6 +36,12 @@ public class NonAdmin extends User {
 		//generates photo objects and connections for stock username
 		if (name.equals("stock")) {
 			this.createAlbum("stock");
+			this.addPhoto("stock", new File("docs/A.png"));
+			this.addPhoto("stock", new File("docs/B.png"));
+			this.addPhoto("stock", new File("docs/C.png"));
+			this.addPhoto("stock", new File("docs/D.png"));
+			this.addPhoto("stock", new File("docs/E.png"));
+			this.addPhoto("stock", new File("docs/F.png"));
 			//need to input stock files here using addphoto
 		}
 	}
