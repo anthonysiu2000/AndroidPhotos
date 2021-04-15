@@ -169,7 +169,7 @@ public class SearchController {
 				tag2 = null;
 			}
 			
-			boolean and = true;
+			boolean and = radioAndOr.isSelected();
 			
 			//gets the list of photos
 			photos = nonAdmin.searchPhotoByTag(tag1, tag2, and);

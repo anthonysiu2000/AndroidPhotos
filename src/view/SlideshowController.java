@@ -1,10 +1,12 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.NonAdmin;
@@ -61,6 +63,8 @@ public class SlideshowController {
 		}
 		
 		//sets the photo in the image view to the first photo in the arraylist
+		Image image = new Image(new File(paths.get(0)).toURI().toString());
+		imageview.setImage(image);
 		
 	}
 	
@@ -72,7 +76,8 @@ public class SlideshowController {
 		
 		//sets the photo in the image view to the next photo in the arraylist
 		if (slideshowIndex < paths.size()-1) {
-			
+			Image image = new Image(new File(paths.get(++slideshowIndex)).toURI().toString());
+			imageview.setImage(image);
 		} else {
 			return;
 		}
@@ -86,7 +91,8 @@ public class SlideshowController {
 
 		//sets the photo in the image view to the previous photo in the arraylist
 		if (slideshowIndex > 0) {
-			
+			Image image = new Image(new File(paths.get(--slideshowIndex)).toURI().toString());
+			imageview.setImage(image);
 		} else {
 			return;
 		}
