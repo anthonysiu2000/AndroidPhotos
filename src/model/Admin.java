@@ -20,9 +20,6 @@ public class Admin extends User{
 	 * @see User#User()
 	 */
 	
-	/**
-	 * a compilation of lists of usernames and other data
-	 */
 	//fields
 	Database database;
 	//constructor

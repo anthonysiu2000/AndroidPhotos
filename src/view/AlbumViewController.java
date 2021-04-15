@@ -49,6 +49,16 @@ public class AlbumViewController {
 	private Button prevButton = null;
 	private int buttonNum = 1;
 	
+	/**
+	 * This method initiates the scene for theh album view for the user.
+	 * 
+	 * @param mainStage			Main stage for the control panel
+	 * @param prevScene			Previous stage from the control panel
+	 * @param thisScene			Current stage from the control panel
+	 * @param nonAdmin			A non admin user	
+	 * @param albumIndex		The index of the album in the database
+	 * @see AlbumController
+	 */
 	//initiates the scene for the user
 	public void start(Stage mainStage, Scene prevScene, Scene thisScene, NonAdmin nonAdmin, int albumIndex){
 		this.nonAdmin = nonAdmin;
@@ -61,13 +71,23 @@ public class AlbumViewController {
 		resetListView(mainStage);
 	}
 	
+	/**
+	 * This method is called to initialize the text of the scene.
+	 * 
+	 * @param mainstage
+	 * @param albumIndex
+	 */
 	//method called to initialize the text of the scene
 	public void setScene(Stage mainstage, int albumIndex) {
 		textError.setText(" ");
 		textAlbum.setText("Album: " + nonAdmin.getAlbums().get(albumIndex).getName());
 	}
 	
-	
+	/**
+	 * This method is called when the scene is returned to.
+	 * 
+	 * @param mainStage
+	 */
 	//method called when we return to this scene
 	public void resetListView(Stage mainStage) {
 		textError.setText("");
@@ -92,6 +112,11 @@ public class AlbumViewController {
 		}
 	}
 	
+	/**
+	 * The method is called when the add photo button is pressed.
+	 * 
+	 * @param e			Action event variable
+	 */
 	//method called when add photo button is pressed
 	public void addPhoto(ActionEvent e) {
 		Button b = (Button)e.getSource();
@@ -118,6 +143,11 @@ public class AlbumViewController {
 		
 	}
 	
+	/**
+	 * The method is called when the remove button is pressed.
+	 * 
+	 * @param e		Action event variable
+	 */
 	//method called when remove photo button is pressed
 	public void removePhoto(ActionEvent e) {
 		Button b = (Button)e.getSource();
@@ -164,6 +194,23 @@ public class AlbumViewController {
 		
 	}
 	
+	/**
+	 * The method is called when the copy photo button is pressed.
+	 * 
+	 * <p>
+	 * Actions acheived in the method:
+	 * <p>
+	 * <ul>
+	 * <li>If the second button pressed is incorrect, we state an error, and do not pass the action
+	 * <li>First Button Press
+	 * <li>Second Button Press
+	 * <li>Gets path of selected photo
+	 * <li>Inputs photo to new album
+	 * <li>Checks if the photo is copied properly
+	 * </ul>
+	 * 
+	 * @param e			Action event variable
+	 */
 	//method called when copy photo button is pressed
 	public void copyPhoto(ActionEvent e) {
 		Button b = (Button)e.getSource();
@@ -229,6 +276,23 @@ public class AlbumViewController {
 		}
 	}
 	
+	/**
+	 * The method called when move photo button is pressed.
+	 * 
+	 * <p>
+	 * Actions acheived in the method:
+	 * <p>
+	 * <ul>
+	 * <li>If the second button pressed is incorrect, we state an error, and do not pass the action
+	 * <li>First Button Press
+	 * <li>Second Button Press
+	 * <li>Gets path of selected photo
+	 * <li>Inputs photo to new album
+	 * <li>Checks if the photo is copied properly
+	 * </ul>
+	 * 
+	 * @param e			Action event variable
+	 */
 	//method called when move photo button is pressed
 	public void movePhoto(ActionEvent e) {
 		Button b = (Button)e.getSource();
@@ -294,6 +358,11 @@ public class AlbumViewController {
 		}
 	}
 	
+	/**
+	 * The method that is called when pressing the Edit/Display Photo button.
+	 * 
+	 * @throws IOException		Input output exception check
+	 */
 	//method called when pressing the Edit/Display Photo button
 	public void editPhoto() throws IOException {
 		buttonNum = 1;
@@ -328,6 +397,11 @@ public class AlbumViewController {
 		stage.show();
 	}
 	
+	/**
+	 * The method called when pressing Slideshow In order button
+	 * 
+	 * @throws IOException
+	 */
 	//method called when pressing Slideshow In order button
 	public void slideshowF() throws IOException {
 		buttonNum = 1;
@@ -346,6 +420,11 @@ public class AlbumViewController {
 		stage.show();
 	}
 
+	/**
+	 * The method called when pressing Slideshow Reverse order button.
+	 * 
+	 * @throws IOException
+	 */
 	//method called when pressing Slideshow Reverse order button
 	public void slideshowR() throws IOException {
 		buttonNum = 1;
@@ -363,7 +442,10 @@ public class AlbumViewController {
 		stage.setResizable(false);
 		stage.show();
 	}
-
+	
+	/**
+	 * This is a method called when pressing back to Album List button.
+	 */
 	//method called when pressing back to Album List button
 	public void backUserView(){
 		stage.setScene(prevScene);
