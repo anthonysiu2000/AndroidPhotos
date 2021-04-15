@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,6 +15,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.NonAdmin;
 
@@ -85,9 +88,7 @@ public class AlbumViewController {
 		obsList = FXCollections.observableArrayList(photos); 
 		photoListView.setItems(obsList); 
 		// checks if the list is empty, and sends warning, not an error
-		if (photos.isEmpty()) {
-			textError.setText("Album List is Empty. Add albums please.");
-		} else {
+		if (!photos.isEmpty()) {
 			photoListView.getSelectionModel().select(0);
 		}
 	}
@@ -107,14 +108,23 @@ public class AlbumViewController {
 		
 		String thisAlbum = nonAdmin.getAlbums().get(index).getName();
 		
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().addAll(
+		        new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
+		        new ExtensionFilter("All Files", "*.*"));
+		File selectedFile = fileChooser.showOpenDialog(stage);
 		
-		
-		
-		
-		
-		
-		
-		
+		boolean addSuccessful = nonAdmin.addPhoto(thisAlbum, selectedFile);
+		//add successful
+		if (addSuccessful) {
+			textError.setText("Add Successful");
+			textFieldAlbum.setText("");
+			resetListView(stage);
+		//add unsuccessful 
+		} else {
+			textError.setText("Error: something went wrong importing the file");
+			textFieldAlbum.setText("");
+		}
 		
 	}
 	
