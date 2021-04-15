@@ -138,7 +138,6 @@ public class AlbumViewController {
                 imgView.setImage(images.get(i));
                 setText(thing);
                 setGraphic(imgView);
-                i++;
             }
         });
 		
