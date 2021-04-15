@@ -135,9 +135,16 @@ public class AlbumViewController {
             @Override
             public void updateItem(String thing, boolean empty) {
                 super.updateItem(thing, empty);
-                imgView.setImage(images.get(i));
-                setText(thing);
-                setGraphic(imgView);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                	imgView.setImage(images.get(i));
+                	setText(thing);
+                	setGraphic(imgView);
+                	imgView.setFitHeight(30);;
+                	imgView.setFitWidth(40);;
+                }
             }
         });
 		
