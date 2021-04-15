@@ -101,7 +101,7 @@ public class LoginController {
 			Scene userViewScene = new Scene(userViewRoot);
 			UserViewController userViewController = userViewLoader.getController();
 			
-			userViewController.start(stage, thisScene, userViewScene, user);
+			userViewController.start(stage, thisScene, userViewScene, user, userViewController);
 			stage.setScene(userViewScene);
 			stage.setTitle("UserView");
 			stage.setResizable(false);

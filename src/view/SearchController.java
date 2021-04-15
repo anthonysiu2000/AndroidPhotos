@@ -1,17 +1,23 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.NonAdmin;
@@ -37,36 +43,79 @@ public class SearchController {
 	@FXML private Text textError;
 
 	//Initiates the Observable List
-	private ObservableList<Photo> obsList; 
+	private ObservableList<String> obsList; 
 	
 	//stores the user
 	private NonAdmin nonAdmin;
 	private Stage stage;
 	private Scene prevScene;
+	private UserViewController uvc;
 	
 	//used for button management
 	private Button prevButton = null;
 	private int buttonNum = 1;
 	
 	//used to store arraylist of photos
-	ArrayList<Photo> photos = new ArrayList<Photo>();
+	ArrayList<String> photos = new ArrayList<String>();
 	
 	//initiates the scene for the user
-	public void start(Stage mainStage, Scene prevScene, NonAdmin nonAdmin){
+	public void start(Stage mainStage, Scene prevScene, NonAdmin nonAdmin, UserViewController uvc){
 		
 		this.nonAdmin = nonAdmin;
 		this.stage = mainStage;
 		this.prevScene = prevScene;
-		
+		this.uvc = uvc;
+		//gets list of photo paths for user
+		for (int i = 0; i < nonAdmin.getConnections().size(); i++) {
+			//finds connections that have the same album as this one
+			this.photos.add(nonAdmin.getConnections().get(i).getPath());
+		}
 		setScene();
 	}
 	
 	//method called to initialize the text of the scene
 	public void setScene() {
 		
-		//updates ui to photos
-		//obsList = FXCollections.observableArrayList(photos); 
-		//photoListView.setItems(obsList); 
+		//sets obslist to a list of blank lines
+		//gets arraylist of images
+		ArrayList<String> blank = new ArrayList<String>();
+		ArrayList<Image> images = new ArrayList<Image>();
+		for (int i = 0; i < photos.size(); i++) {
+			blank.add(String.valueOf(i));
+			images.add(new Image(new File(photos.get(i)).toURI().toString()));
+		}
+		
+		//updates ui to list of albums
+		obsList = FXCollections.observableArrayList(blank); 
+		photoListView.setItems(obsList); 
+		
+		
+		
+		//sets each cell to hold an image
+		photoListView.setCellFactory(listView -> 
+		new ListCell<String>() {
+            private ImageView imgView = new ImageView();
+            @Override
+            public void updateItem(String thing, boolean empty) {
+                super.updateItem(thing, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                	imgView.setImage(images.get(Integer.parseInt(thing)));
+                	setText(thing);
+                	setGraphic(imgView);
+                	imgView.setFitHeight(30);;
+                	imgView.setFitWidth(40);;
+                }
+            }
+        });
+		
+		
+		// checks if the list is empty, and sends warning, not an error
+		if (!photos.isEmpty()) {
+			photoListView.getSelectionModel().select(0);
+		}
 	}
 		
 	
@@ -115,7 +164,11 @@ public class SearchController {
 			boolean and = true;
 			
 			//gets the list of photos
-			photos = nonAdmin.searchPhotoByTag(tag1, tag2, and);
+			ArrayList<Photo> photo = nonAdmin.searchPhotoByTag(tag1, tag2, and);
+			photos = new ArrayList<String>();
+			for (int i = 0; i < photo.size(); i++) {
+				photos.add(photo.get(i).getPath());
+			}
 			//reset back to normal
 			textFieldTag1Name.setText("");
 			textFieldTag1Value.setText("");
@@ -172,7 +225,11 @@ public class SearchController {
 			boolean and = radioAndOr.isSelected();
 			
 			//gets the list of photos
-			photos = nonAdmin.searchPhotoByTag(tag1, tag2, and);
+			ArrayList<Photo> photo = nonAdmin.searchPhotoByTag(tag1, tag2, and);
+			photos = new ArrayList<String>();
+			for (int i = 0; i < photo.size(); i++) {
+				photos.add(photo.get(i).getPath());
+			}
 			//reset back to normal
 			textFieldTag1Name.setText("");
 			textFieldTag1Value.setText("");
@@ -198,12 +255,20 @@ public class SearchController {
 		}
 		textError.setText("");
 		
+		ArrayList<Photo> photo = new ArrayList<Photo>();
 		//creates a new album and puts it into the database
-		nonAdmin.createAlbumFromSearch(photos);
+		for (int i = 0; i < photos.size(); i++) {
+			photo.add(new Photo(new File(photos.get(i))));
+		}
+		
+		nonAdmin.createAlbumFromSearch(photo);
 	}
 	
 	//method called when pressing back to Album List button
 	public void backUserView(){
+		
+
+		uvc.resetListView(stage);
 		stage.setScene(prevScene);
 		stage.setTitle("UserView");
 		stage.setResizable(false);

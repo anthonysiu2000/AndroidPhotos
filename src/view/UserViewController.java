@@ -42,18 +42,20 @@ public class UserViewController {
 	private Stage stage;
 	private Scene prevScene;
 	private Scene thisScene;
+	private UserViewController uvc;
 	
 	//used for button management
 	private Button prevButton = null;
 	private int buttonNum = 1;
 	
 	//initiates the scene for the user
-	public void start(Stage mainStage, Scene prevScene, Scene thisScene, NonAdmin nonAdmin){
+	public void start(Stage mainStage, Scene prevScene, Scene thisScene, NonAdmin nonAdmin, UserViewController uvc){
 		
 		this.nonAdmin = nonAdmin;
 		this.stage = mainStage;
 		this.prevScene = prevScene;
 		this.thisScene = thisScene;
+		this.uvc = uvc;
 		textError.setText(" ");
 		textWelcome.setText("Welcome " + nonAdmin.getUsername());
 		
@@ -159,7 +161,7 @@ public class UserViewController {
 		Scene searchScene = new Scene(searchRoot);
 		SearchController searchController = searchLoader.getController();
 		
-		searchController.start(stage, thisScene, nonAdmin);
+		searchController.start(stage, thisScene, nonAdmin, uvc);
 		stage.setScene(searchScene);
 		stage.setTitle("searchView");
 		stage.setResizable(false);
