@@ -429,7 +429,7 @@ public class NonAdmin extends User {
 	 * @return sortedPhotos
 	 */
 	//returns an array of photos that have the tags specified; if 2, uses andOp boolean to specify "and" or "or"
-	public ArrayList<Photo> serachPhotoByTag(Tag tag1, Tag tag2, boolean andOp) {
+	public ArrayList<Photo> searchPhotoByTag(Tag tag1, Tag tag2, boolean andOp) {
 		//creates new array list
 		ArrayList<Photo> sortedPhotos = new ArrayList<Photo>();
 		for (int j = 0; j < photoList.size(); j++) {

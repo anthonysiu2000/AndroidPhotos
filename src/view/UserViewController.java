@@ -161,7 +161,7 @@ public class UserViewController {
 		Scene searchScene = new Scene(searchRoot);
 		SearchController searchController = searchLoader.getController();
 		
-		//searchController.start(stage, thisScene, nonAdmin);
+		searchController.start(stage, thisScene, nonAdmin);
 		stage.setScene(searchScene);
 		stage.setTitle("searchView");
 		stage.setResizable(false);
