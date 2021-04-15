@@ -130,7 +130,6 @@ public class AlbumViewController {
 		//sets each cell to hold an image
 		photoListView.setCellFactory(listView -> 
 		new ListCell<String>() {
-			int i = 0;
             private ImageView imgView = new ImageView();
             @Override
             public void updateItem(String thing, boolean empty) {
@@ -217,14 +216,14 @@ public class AlbumViewController {
 		String thisAlbum = nonAdmin.getAlbums().get(index).getName();
 		
 		//gets path of selected photo
-		int index = photoListView.getSelectionModel().getSelectedIndex();
+		int pathIndex = photoListView.getSelectionModel().getSelectedIndex();
 		int parse = 0;
 		String path = null;
 		for (int i = 0; i < nonAdmin.getConnections().size(); i++) {
 			//if the connection belongs to this album
 			if (nonAdmin.getConnections().get(i).getAlbum().equals(nonAdmin.getAlbums().get(index).getName())) {
 				//the path of the photo of this album is set in path
-				if (parse == index) {
+				if (parse == pathIndex) {
 					path = nonAdmin.getConnections().get(i).getPath();
 					break;
 				}
@@ -297,14 +296,14 @@ public class AlbumViewController {
 			String thisAlbum = nonAdmin.getAlbums().get(index).getName();
 			
 			//gets path of selected photo
-			int index = photoListView.getSelectionModel().getSelectedIndex();
+			int pathIndex = photoListView.getSelectionModel().getSelectedIndex();
 			int parse = 0;
 			String path = null;
 			for (int i = 0; i < nonAdmin.getConnections().size(); i++) {
 				//if the connection belongs to this album
 				if (nonAdmin.getConnections().get(i).getAlbum().equals(nonAdmin.getAlbums().get(index).getName())) {
 					//the path of the photo of this album is set in path
-					if (parse == index) {
+					if (parse == pathIndex) {
 						path = nonAdmin.getConnections().get(i).getPath();
 						break;
 					}
@@ -350,7 +349,7 @@ public class AlbumViewController {
 		Button b = (Button)e.getSource();
 		prevButton = b;
 		//If the second button pressed is incorrect, we state an error, and do not pass the action
-		if (buttonNum == 2 && prevButton != buttonCopy) {
+		if (buttonNum == 2 && prevButton != buttonMove) {
 			textError.setText("Error: Incorrect button press; Action reset.");
 			textFieldAlbum.setText("");
 			buttonNum = 1;
@@ -379,14 +378,14 @@ public class AlbumViewController {
 			String thisAlbum = nonAdmin.getAlbums().get(index).getName();
 			
 			//gets path of selected photo
-			int index = photoListView.getSelectionModel().getSelectedIndex();
+			int pathIndex = photoListView.getSelectionModel().getSelectedIndex();
 			int parse = 0;
 			String path = null;
 			for (int i = 0; i < nonAdmin.getConnections().size(); i++) {
 				//if the connection belongs to this album
 				if (nonAdmin.getConnections().get(i).getAlbum().equals(nonAdmin.getAlbums().get(index).getName())) {
 					//the path of the photo of this album is set in path
-					if (parse == index) {
+					if (parse == pathIndex) {
 						path = nonAdmin.getConnections().get(i).getPath();
 						break;
 					}

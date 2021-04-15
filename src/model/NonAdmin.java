@@ -352,6 +352,9 @@ public class NonAdmin extends User {
 	 */
 	//copies a photo from an album to another; returns true if successful
 	public boolean copyPhoto(String oAlbName, String nAlbName, String photoPath) {
+		if (oAlbName.equals(nAlbName)) {
+			return false;
+		}
 		//checks if the photo exists
 		for (int k = 0; k < photoList.size(); k++) {
 			if (photoList.get(k).getPath().equals(photoPath)) {
@@ -359,7 +362,7 @@ public class NonAdmin extends User {
 				boolean albumExists = false;
 				for (int j = 0; j < albumList.size(); j++) {
 					if (albumList.get(j).getName().equals(nAlbName)) {
-						return albumExists = true;
+						albumExists = true;
 					}
 				}
 				if (!albumExists) {
@@ -367,7 +370,7 @@ public class NonAdmin extends User {
 				}
 				//checks if there is already an instance of the photo in the target album
 				for (int i = 0; i < conList.size(); i++) {
-					if (conList.get(i).getAlbum() == nAlbName && conList.get(i).getPath() == photoPath) {
+					if (conList.get(i).getAlbum().equals(nAlbName) && conList.get(i).getPath().equals(photoPath)) {
 						return false;
 					}
 				}
@@ -388,11 +391,14 @@ public class NonAdmin extends User {
 	 */
 	//moves a photo from an album to another; returns true if successful
 	public boolean movePhoto(String oAlbName, String nAlbName, String photoPath) {
+		if (oAlbName.equals(nAlbName)) {
+			return false;
+		}
 		//copies photo to new album
 		if (copyPhoto(oAlbName, nAlbName, photoPath)) {
 			//removes old photo to album connection
 			for (int i = conList.size()-1; i >= 0; i--) {
-				if (conList.get(i).getAlbum() == oAlbName && conList.get(i).getPath() == photoPath) {
+				if (conList.get(i).getAlbum().equals(oAlbName) && conList.get(i).getPath().equals(photoPath)) {
 					conList.remove(i);
 					return true;
 				}

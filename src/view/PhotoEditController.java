@@ -65,9 +65,9 @@ public class PhotoEditController {
 				if (tagList.size() == 0) {
 					break;
 				}
-				String tags = "Tags: " +tagList.get(0).getName() + ": " + tagList.get(0).getValue() + " ";
+				String tags = "Tags: (" + tagList.get(0).getName() + ": " + tagList.get(0).getValue() + ") ";
 				for (int j = 1; j < tagList.size(); j++) {
-					tags = tags + "| " + tagList.get(j).getName() + ": " + tagList.get(i).getValue() + " ";
+					tags = tags + "| (" + tagList.get(j).getName() + ": " + tagList.get(i).getValue() + ") ";
 				}
 				textTag.setText(tags);
 				break;

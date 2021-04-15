@@ -27,9 +27,6 @@ public class SlideshowController {
 	//stores user
 	private Stage stage;
 	private Scene prevScene;
-	private NonAdmin nonAdmin;
-	private int index;
-	private boolean forward;
 	
 	//makes the arraylist of photo paths
 	ArrayList<String> paths = new ArrayList<String>();
@@ -41,9 +38,6 @@ public class SlideshowController {
 	public void start(Stage mainstage, Scene prevScene, NonAdmin nonAdmin, int index, boolean forward) {
 		this.stage = mainstage;
 		this.prevScene = prevScene;
-		this.nonAdmin = nonAdmin;
-		this.index = index;
-		this.forward = forward;
 		
 		//sets the arraylist according to forward or backward
 		if (forward) {

@@ -16,9 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Database;
 import model.NonAdmin;
-import model.User;
 
 /**
  * Photos is a single-user photo application that allows storage and management of photos in one or more albums.
