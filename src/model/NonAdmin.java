@@ -295,6 +295,13 @@ public class NonAdmin extends User {
 		Tag tag = new Tag(tagName, tagValue);
 		for (int k = 0; k < photoList.size(); k++) {
 			if (photoList.get(k).getPath().equals(photoPath)) {
+				for (int i = 0; i < photoList.get(k).getTags().size(); i++) {
+					if (photoList.get(k).getTags().get(i).getName().equals(tagName)) {
+						if (photoList.get(k).getTags().get(i).getValue().equals(tagValue)) {
+							return false;
+						}
+					}
+				}
 				photoList.get(k).addTag(tag);
 				return true;
 			}

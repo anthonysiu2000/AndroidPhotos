@@ -321,7 +321,7 @@ public class AlbumViewController {
 		Scene photoEditScene = new Scene(photoEditRoot);
 		PhotoEditController photoEditController = photoEditLoader.getController();
 		
-		//photoEditController.start(stage, thisScene, photoEditScene, nonAdmin, path);
+		photoEditController.start(stage, thisScene, nonAdmin, path);
 		stage.setScene(photoEditScene);
 		stage.setTitle("UserView");
 		stage.setResizable(false);
