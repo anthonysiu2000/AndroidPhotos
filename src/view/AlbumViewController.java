@@ -117,7 +117,7 @@ public class AlbumViewController {
 		ArrayList<String> blank = new ArrayList<String>();
 		ArrayList<Image> images = new ArrayList<Image>();
 		for (int i = 0; i < photos.size(); i++) {
-			blank.add(" ");
+			blank.add(String.valueOf(i));
 			images.add(new Image(new File(photos.get(i)).toURI().toString()));
 		}
 		
@@ -139,7 +139,7 @@ public class AlbumViewController {
                     setText(null);
                     setGraphic(null);
                 } else {
-                	imgView.setImage(images.get(i));
+                	imgView.setImage(images.get(Integer.parseInt(thing)));
                 	setText(thing);
                 	setGraphic(imgView);
                 	imgView.setFitHeight(30);;
