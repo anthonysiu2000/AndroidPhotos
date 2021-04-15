@@ -11,8 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -73,7 +76,6 @@ public class AlbumViewController {
 	
 	//method called when we return to this scene
 	public void resetListView(Stage mainStage) {
-		textError.setText("");
 		textFieldAlbum.setText("");
 		
 		//gets list of photo paths for user
@@ -84,9 +86,36 @@ public class AlbumViewController {
 			}
 		}
 		
+		//sets obslist to a list of blank lines
+		//gets arraylist of images
+		ArrayList<String> blank = new ArrayList<String>();
+		ArrayList<Image> images = new ArrayList<Image>();
+		for (int i = 0; i < photos.size(); i++) {
+			blank.add(" ");
+			images.add(new Image(photos.get(i)));
+		}
+		
 		//updates ui to list of albums
-		obsList = FXCollections.observableArrayList(photos); 
+		obsList = FXCollections.observableArrayList(blank); 
 		photoListView.setItems(obsList); 
+		
+		
+		
+		//sets each cell to hold an image
+		photoListView.setCellFactory(listView -> 
+		new ListCell<String>() {
+			int i = 0;
+            private ImageView imgView = new ImageView();
+            @Override
+            public void updateItem(String thing, boolean empty) {
+                super.updateItem(thing, empty);
+                imgView.setImage(images.get(i));
+                setText(thing);
+                setGraphic(imgView);
+                i++;
+            }
+        });
+		
 		// checks if the list is empty, and sends warning, not an error
 		if (!photos.isEmpty()) {
 			photoListView.getSelectionModel().select(0);
@@ -310,6 +339,10 @@ public class AlbumViewController {
 		
 		//gets path of photo we want to edit
 		int index = photoListView.getSelectionModel().getSelectedIndex();
+		if (index < 0) {
+			textError.setText("No photos to enter");
+			return;
+		}
 		int parse = 0;
 		String path = null;
 		for (int i = 0; i < nonAdmin.getConnections().size(); i++) {
