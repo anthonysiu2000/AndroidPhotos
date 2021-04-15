@@ -224,7 +224,7 @@ public class PhotoEditController {
 	//method used to get back to album view
 	public void goBack() {
 		stage.setScene(prevScene);
-		stage.setTitle("UserView");
+		stage.setTitle("AlbumView");
 		stage.setResizable(false);
 		stage.show();
 		

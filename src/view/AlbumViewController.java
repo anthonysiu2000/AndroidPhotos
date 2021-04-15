@@ -323,7 +323,7 @@ public class AlbumViewController {
 		
 		photoEditController.start(stage, thisScene, nonAdmin, path);
 		stage.setScene(photoEditScene);
-		stage.setTitle("UserView");
+		stage.setTitle("PhotoEditView");
 		stage.setResizable(false);
 		stage.show();
 	}
@@ -341,7 +341,7 @@ public class AlbumViewController {
 		
 		slideshowController.start(stage, thisScene, nonAdmin, index, true);
 		stage.setScene(slideshowScene);
-		stage.setTitle("searchView");
+		stage.setTitle("SlideshowView");
 		stage.setResizable(false);
 		stage.show();
 	}
@@ -357,7 +357,7 @@ public class AlbumViewController {
 		Scene slideshowScene = new Scene(slideshowRoot);
 		SlideshowController slideshowController = slideshowLoader.getController();
 				
-		//slideshowController.start(stage, thisScene, nonAdmin, index, false);
+		slideshowController.start(stage, thisScene, nonAdmin, index, false);
 		stage.setScene(slideshowScene);
 		stage.setTitle("searchView");
 		stage.setResizable(false);

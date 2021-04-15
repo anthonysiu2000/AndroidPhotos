@@ -144,7 +144,7 @@ public class UserViewController {
 		
 		albumViewController.start(stage, thisScene, albumViewScene, nonAdmin, index);
 		stage.setScene(albumViewScene);
-		stage.setTitle("UserView");
+		stage.setTitle("AlbumView");
 		stage.setResizable(false);
 		stage.show();
 	}

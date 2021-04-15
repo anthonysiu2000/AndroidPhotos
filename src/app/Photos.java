@@ -8,13 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import view.AdminController;
-import view.AlbumViewController;
 import view.LoginController;
-import view.PhotoEditController;
-import view.SearchController;
-import view.SlideshowController;
-import view.UserViewController;
 import model.Database;
 
 /**
@@ -64,32 +58,14 @@ public class Photos extends Application{
 		
 		//creates an anchorpane objects with associated fmxls
 		AnchorPane loginRoot = (AnchorPane)loginLoader.load();
-		AnchorPane photoEditRoot = (AnchorPane)photoEditLoader.load();
-		AnchorPane searchRoot = (AnchorPane)searchLoader.load();
-		AnchorPane slideshowRoot = (AnchorPane)slideshowLoader.load();
-		AnchorPane userViewRoot = (AnchorPane)userViewLoader.load();
-		AnchorPane adminRoot = (AnchorPane)adminLoader.load();
-		AnchorPane albumViewRoot = (AnchorPane)albumViewLoader.load();
 		
 		
 		//gets button and other functionality from controller class
 		LoginController loginController = loginLoader.getController();
-		PhotoEditController photoEditController = photoEditLoader.getController();
-		SearchController searchController = searchLoader.getController();
-		SlideshowController slideshowController = slideshowLoader.getController();
-		UserViewController userViewController = userViewLoader.getController();
-		AdminController adminController = adminLoader.getController();
-		AlbumViewController albumViewController = albumViewLoader.getController();
 
 		
 		//Creates Scenes from the anchorpane roots
 		Scene loginScene = new Scene(loginRoot);
-		Scene photoEditScene = new Scene(photoEditRoot);
-		Scene searchScene = new Scene(searchRoot);
-		Scene slideshowScene = new Scene(slideshowRoot);
-		Scene userViewScene = new Scene(userViewRoot);
-		Scene adminScene = new Scene(adminRoot);
-		Scene albumViewScene = new Scene(albumViewRoot);
 		
 		
 		//initializes the primaryStage as the login scene to the UI
