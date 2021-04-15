@@ -118,7 +118,7 @@ public class AlbumViewController {
 		ArrayList<Image> images = new ArrayList<Image>();
 		for (int i = 0; i < photos.size(); i++) {
 			blank.add(" ");
-			images.add(new Image(photos.get(i)));
+			images.add(new Image(new File(photos.get(i)).toURI().toString()));
 		}
 		
 		//updates ui to list of albums
@@ -142,9 +142,6 @@ public class AlbumViewController {
             }
         });
 		
-		if (photos.isEmpty()) {
-			System.out.println("nothing in photos");
-		}
 		
 		// checks if the list is empty, and sends warning, not an error
 		if (!photos.isEmpty()) {
