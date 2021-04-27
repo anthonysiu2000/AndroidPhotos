@@ -134,7 +134,7 @@ public class AlbumViewController {
             @Override
             public void updateItem(String thing, boolean empty) {
                 super.updateItem(thing, empty);
-                if (empty) {
+                if (empty || Integer.parseInt(thing) >= images.size()) {
                     setText(null);
                     setGraphic(null);
                 } else {
@@ -234,7 +234,7 @@ public class AlbumViewController {
 		boolean deleteSuccessful = nonAdmin.removePhoto(thisAlbum, path);
 		//delete successful
 		if (deleteSuccessful) {
-			textError.setText("Copy Successful");
+			textError.setText("Delete Successful");
 			textFieldAlbum.setText("");
 			resetListView(stage);
 		//copy unsuccessful due to photo existing or album not existing
@@ -461,6 +461,13 @@ public class AlbumViewController {
 	public void slideshowF() throws IOException {
 		buttonNum = 1;
 
+		//if no photos, return an error
+		int photoIndex = photoListView.getSelectionModel().getSelectedIndex();
+		if (photoIndex < 0) {
+			textError.setText("No photos to show");
+			return;
+		}
+		
 		//switches scene to UserView,
 		FXMLLoader slideshowLoader = new FXMLLoader();
 		slideshowLoader.setLocation(getClass().getResource("/view/Slideshow.fxml"));
@@ -484,6 +491,13 @@ public class AlbumViewController {
 	public void slideshowR() throws IOException {
 		buttonNum = 1;
 
+		//if no photos, return an error
+		int photoIndex = photoListView.getSelectionModel().getSelectedIndex();
+		if (photoIndex < 0) {
+			textError.setText("No photos to show");
+			return;
+		}
+		
 		//switches scene to UserView,
 		FXMLLoader slideshowLoader = new FXMLLoader();
 		slideshowLoader.setLocation(getClass().getResource("/view/Slideshow.fxml"));

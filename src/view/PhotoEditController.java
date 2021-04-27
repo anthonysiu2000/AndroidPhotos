@@ -63,6 +63,7 @@ public class PhotoEditController {
 				//sets Tags
 				ArrayList<Tag> tagList = nonAdmin.getPhotos().get(i).getTags();
 				if (tagList.size() == 0) {
+					textTag.setText("Tags: ");
 					break;
 				}
 				String tags = "Tags: (" + tagList.get(0).getName() + ": " + tagList.get(0).getValue() + ") ";
@@ -156,7 +157,7 @@ public class PhotoEditController {
 				return;
 			}
 
-			//adds Caption
+			//adds Tag
 			boolean addSuccessful = nonAdmin.addTag(path, tag1, tag2);
 			if (addSuccessful) {
 				//reset back to normal
@@ -198,7 +199,7 @@ public class PhotoEditController {
 			String tag1 = textFieldFirst.getText().trim();
 			String tag2 = textFieldSecond.getText().trim();
 			buttonNum = 1;
-			//caption cannot be whitespace
+			//tag cannot be whitespace
 			if (tag1.isBlank() || tag2.isBlank()) {
 				textError.setText("Error: tag not properly inputted");
 				textFieldFirst.setText("");
@@ -206,7 +207,7 @@ public class PhotoEditController {
 				return;
 			}
 
-			//adds Caption
+			//removes tag
 			boolean deleteSuccessful = nonAdmin.removeTag(path, tag1, tag2);
 			if (deleteSuccessful) {
 				//reset back to normal

@@ -105,7 +105,7 @@ public class NonAdmin extends User {
 		for (int i = albumList.size()-1; i >= 0; i--) {
 			if (albumList.get(i).getName().equals(aName)) {
 				albumList.remove(i);
-				return true;
+				foundAlbum = true;
 			}
 		}
 		if (!foundAlbum) {
@@ -200,8 +200,8 @@ public class NonAdmin extends User {
 			}
 		}
 		//if photo does not exist in database, adds it
-		for (int j = 0; j < conList.size(); j++) {
-			if (photoList.get(j).getPath().equals(photo.getPath())) {
+		for (int k = 0; k < photoList.size(); k++) {
+			if (photoList.get(k).getPath().equals(photo.getPath())) {
 				photoFound = true;
 				break;
 			}
@@ -330,8 +330,8 @@ public class NonAdmin extends User {
 			if (photoList.get(k).getPath().equals(photoPath)) {
 				//checks if the tag exists
 				for (int i = photoList.get(k).tags.size()-1; i >= 0; i--) {
-					if (photoList.get(k).tags.get(i).getName() == tagName && 
-							photoList.get(k).tags.get(i).getValue() == tagValue) {
+					if (photoList.get(k).tags.get(i).getName().equals(tagName) && 
+							photoList.get(k).tags.get(i).getValue().equals(tagValue)) {
 						photoList.get(k).tags.remove(i);
 						return true;
 					}
@@ -450,6 +450,9 @@ public class NonAdmin extends User {
 		//removes photos that do not have the specified tags
 		for (int i = sortedPhotos.size() - 1; i >= 0; i--) {
 			ArrayList<Tag> temp = sortedPhotos.get(i).getTags();
+			if (temp.size() == 0) {
+				sortedPhotos.remove(i);
+			}
 			//if there is only one tag
 			if (tag2 == null) {
 				for (int j = 0; j< temp.size(); j++) {
@@ -534,15 +537,20 @@ public class NonAdmin extends User {
 			return null;
 		}
 		Calendar earliest = photoList.get(0).getDate();
+		boolean PhotoInAlbum = false;
 		for (int i = 0; i < conList.size(); i++) {
 			if (conList.get(i).getAlbum().equals(aName)) {
 				String temp = conList.get(i).getPath();
 				for (int j = 0; j < photoList.size(); j++) {
-					if (photoList.get(j).getPath().equals(temp) && photoList.get(j).getDate().compareTo(earliest) < 0) {
+					if (photoList.get(j).getPath().equals(temp) && (!PhotoInAlbum || photoList.get(j).getDate().compareTo(earliest) < 0)) {
 						earliest = photoList.get(j).getDate();
+						PhotoInAlbum = true;
 					}
 				}
 			}
+		}
+		if (!PhotoInAlbum) {
+			return null;
 		}
 		return earliest;
 	}
@@ -559,16 +567,22 @@ public class NonAdmin extends User {
 			return null;
 		}
 		Calendar latest = photoList.get(0).getDate();
+		boolean PhotoInAlbum = false;
 		for (int i = 0; i < conList.size(); i++) {
 			if (conList.get(i).getAlbum().equals(aName)) {
 				String temp = conList.get(i).getPath();
 				for (int j = 0; j < photoList.size(); j++) {
-					if (photoList.get(j).getPath().equals(temp) && photoList.get(j).getDate().compareTo(latest) > 0) {
+					if (photoList.get(j).getPath().equals(temp) && (!PhotoInAlbum || photoList.get(j).getDate().compareTo(latest) > 0)) {
 						latest = photoList.get(j).getDate();
+						PhotoInAlbum = true;
 					}
 				}
 			}
 		}
+		if (!PhotoInAlbum) {
+			return null;
+		}
+		
 		return latest;
 	}
 	

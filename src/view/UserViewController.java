@@ -267,8 +267,12 @@ public class UserViewController {
 			return;
 		}
 		String albumDeleted = nonAdmin.getAlbums().get(index).getName();
-		nonAdmin.deleteAlbum(albumDeleted);
-		
+		boolean asdf = nonAdmin.deleteAlbum(albumDeleted);
+		if (!asdf) {
+			textError.setText("Album not deleted properly");
+			textFieldAlbum.setText("");
+			return;
+		}
 		
 		//gets list of albums for user
 		ArrayList<String> albums = new ArrayList<String>();

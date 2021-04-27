@@ -1,13 +1,15 @@
 package view;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -17,7 +19,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.NonAdmin;
@@ -66,15 +67,16 @@ public class SearchController {
 		this.prevScene = prevScene;
 		this.uvc = uvc;
 		//gets list of photo paths for user
-		for (int i = 0; i < nonAdmin.getConnections().size(); i++) {
+		for (int i = 0; i < nonAdmin.getPhotos().size(); i++) {
 			//finds connections that have the same album as this one
-			this.photos.add(nonAdmin.getConnections().get(i).getPath());
+			this.photos.add(nonAdmin.getPhotos().get(i).getPath());
 		}
 		setScene();
 	}
 	
 	//method called to initialize the text of the scene
 	public void setScene() {
+		textError.setText(" ");
 		
 		//sets obslist to a list of blank lines
 		//gets arraylist of images
@@ -98,7 +100,7 @@ public class SearchController {
             @Override
             public void updateItem(String thing, boolean empty) {
                 super.updateItem(thing, empty);
-                if (empty) {
+                if (empty || Integer.parseInt(thing) >= images.size()) {
                     setText(null);
                     setGraphic(null);
                 } else {
@@ -138,42 +140,28 @@ public class SearchController {
 		//First Button Press
 		if (buttonNum == 1) {
 			//Instructs user
-			textError.setText("Please input tag(s), choose and/or if applicable and then press Delete Tag again.");
+			textError.setText("Please input date ranges, then press Search By Data Range again.");
 			buttonNum = 2;
 			
 		//Second Button Press	
 		} else {
-			String tag1Name = textFieldTag1Name.getText().trim();
-			String tag1Value = textFieldTag1Value.getText().trim();
-			String tag2Name = textFieldTag2Name.getText().trim();
-			String tag2Value = textFieldTag2Value.getText().trim();
-			buttonNum = 1;
-			//caption cannot be whitespace
-			if (tag1Name.isBlank() || tag2Value.isBlank()) {
-				textError.setText("Error: tag not properly inputted");
-				textFieldTag1Name.setText("");
-				textFieldTag1Value.setText("");
-				return;
-			}
-			Tag tag1 = new Tag(tag1Name, tag1Value);
-			Tag tag2 = new Tag(tag2Name, tag2Value);
-			if (tag2Name.isBlank() && tag2Value.isBlank()) {
-				tag2 = null;
-			}
+			LocalDate sLDate = startDate.getValue();
+			LocalDate eLDate = endDate.getValue();
 			
-			boolean and = true;
+			Date sDate = Date.from(sLDate.atStartOfDay().toInstant(null));
+			Date eDate = Date.from(eLDate.atStartOfDay().toInstant(null));
+			
+			Calendar sCal = Calendar.getInstance();
+			Calendar eCal = Calendar.getInstance();
+			sCal.setTime(sDate);
+			eCal.setTime(eDate);
 			
 			//gets the list of photos
-			ArrayList<Photo> photo = nonAdmin.searchPhotoByTag(tag1, tag2, and);
+			ArrayList<Photo> photo = nonAdmin.searchPhotoByDate(sCal,eCal);
 			photos = new ArrayList<String>();
 			for (int i = 0; i < photo.size(); i++) {
 				photos.add(photo.get(i).getPath());
 			}
-			//reset back to normal
-			textFieldTag1Name.setText("");
-			textFieldTag1Value.setText("");
-			textFieldTag2Name.setText("");
-			textFieldTag2Value.setText("");
 				
 			setScene();
 			textError.setText("Search Successful");
@@ -199,7 +187,7 @@ public class SearchController {
 		//First Button Press
 		if (buttonNum == 1) {
 			//Instructs user
-			textError.setText("Please input tag(s), choose and/or if applicable and then press Delete Tag again.");
+			textError.setText("Please input tag(s), choose and/or if applicable and then press search Tag again.");
 			buttonNum = 2;
 			
 		//Second Button Press	
@@ -210,7 +198,7 @@ public class SearchController {
 			String tag2Value = textFieldTag2Value.getText().trim();
 			buttonNum = 1;
 			//caption cannot be whitespace
-			if (tag1Name.isBlank() || tag2Value.isBlank()) {
+			if (tag1Name.isBlank() || tag1Value.isBlank()) {
 				textError.setText("Error: tag not properly inputted");
 				textFieldTag1Name.setText("");
 				textFieldTag1Value.setText("");
@@ -218,7 +206,7 @@ public class SearchController {
 			}
 			Tag tag1 = new Tag(tag1Name, tag1Value);
 			Tag tag2 = new Tag(tag2Name, tag2Value);
-			if (tag2Name.isBlank() && tag2Value.isBlank()) {
+			if (tag2Name.isBlank() || tag2Value.isBlank()) {
 				tag2 = null;
 			}
 			
@@ -261,7 +249,12 @@ public class SearchController {
 			photo.add(new Photo(new File(photos.get(i))));
 		}
 		
+		if (photos.isEmpty()) {
+			textError.setText("No photos in search to put into album.");
+		}
+		
 		nonAdmin.createAlbumFromSearch(photo);
+		textError.setText("New Album successfully made.");
 	}
 	
 	//method called when pressing back to Album List button
